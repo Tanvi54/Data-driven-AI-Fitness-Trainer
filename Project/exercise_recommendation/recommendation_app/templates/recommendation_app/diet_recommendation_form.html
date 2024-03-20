@@ -1,0 +1,92 @@
+<!-- nutrition_app/templates/input_form.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diet Recommendation</title>
+    <style>
+        /* Add CSS for the background image */
+        body {
+            background-image: url("/static/images/background.jpeg"); 
+            background-size: cover; /* Adjust as needed to cover the whole screen */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+        
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Nutrition Recommendation</h1>
+
+        <form method="post" action="{% url 'diet_recommendation_form' %}">
+            {% csrf_token %}
+            
+            <label for="age">Age:</label>
+            <input type="number" name="age" id="age" required>
+            <br>
+
+            <label for="weight">Weight (kg):</label>
+            <input type="number" name="weight" id="weight" required>
+            <br>
+
+            <label for="height">Height (cm):</label>
+            <input type="number" name="height" id="height" required>
+            <br>
+
+            <label for="allergies">Allergies (comma-separated, e.g., Dairy,Eggs):</label>
+            <input type="text" name="allergies" id="allergies">
+            <br>
+
+            <label>Are you vegetarian?</label>
+            <input type="radio" name="is_vegetarian" value="yes" id="vegetarian_yes">
+            <label for="vegetarian_yes">Yes</label>
+
+            <input type="radio" name="is_vegetarian" value="no" id="vegetarian_no">
+            <label for="vegetarian_no">No</label>
+            <br>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if recommended_foods %}
+        <h2>Recommended Foods</h2>
+        <h3>Breakfast:</h3>
+        <ul>
+            {% for food in recommended_foods.breakfast %}
+                <li>{{ food }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Lunch:</h3>
+        <ul>
+            {% for food in recommended_foods.lunch %}
+                <li>{{ food }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Dinner:</h3>
+        <ul>
+            {% for food in recommended_foods.dinner %}
+                <li>{{ food }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    </div>
+</body>
+</html>

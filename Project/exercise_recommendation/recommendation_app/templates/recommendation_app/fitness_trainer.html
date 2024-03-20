@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Fitness Trainer</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('/static/images/bgimage.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+        }
+        .video-container {
+            height: 250px;
+            width: 800px;
+            align-self: left;
+            left: 2px;
+            top: 2px;
+        }
+        #video-stream {
+            height: auto;
+            width: auto;
+        }
+        .image-container {
+            width: 40%;
+        }
+        .description h1 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            text-align: left;
+            left: 100px;
+            color: #fff;
+        }
+
+        .description p {
+            font-size: 18px;
+            text-align: left;
+            left: 10%;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="post" action="{% url 'ai_fitness_trainer' %}">
+        {% csrf_token %}
+
+    <div class="content">
+        <div class="video-container">
+            <video id="video-stream" autoplay></video>
+        </div>
+        <div class="description">
+            <h1>Hello! Hope you're having a great day.</h1>
+            <p>Let's Hustle</p>
+        </div>
+    </div>
+    <script>
+        // JavaScript code to access the webcam and display the video stream
+        async function setupWebcam() {
+            const videoElement = document.getElementById('video-stream');
+            const stream = await navigator.mediaDevices.getUserMedia({ 'video': true });
+            videoElement.srcObject = stream;
+        }
+        
+        window.addEventListener('DOMContentLoaded', (event) => {
+            setupWebcam();
+        });
+    </script>
+    
+</body>
+</html>
